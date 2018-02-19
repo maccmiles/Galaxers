@@ -1,7 +1,7 @@
 /*
  * MacchiaroliM
  * Galaxers - File I/O
- * 2-13-17
+ * 2-19-17
  */
 import java.util.NoSuchElementException;//end of file
 import java.util.Scanner;//import scanner utility
@@ -14,9 +14,10 @@ public static void main (String[] args)
 {
 	try (Scanner fin = new Scanner(new File(FileLocation)))  {//Attempt input file
 	//countVotes(fin);//count Votes
-		String test[] = new String[5];
-		test[0]="one";
-	getWinner(countVotes(fin), test);
+		String names[] = {"Zero", "One", "Two", "Three", "Four"};
+		int tally[] = countVotes(fin);
+	printVotes(tally);
+	System.out.println(getWinner(tally, names));
 	}
 	catch (FileNotFoundException ex) {//If output cannot be established
 			System.out.printf("Error! File not found!%n");
@@ -38,6 +39,9 @@ catch(NoSuchElementException e){break;}}//catch no more strings
 
 public static void printVotes (int[] v) {
 	//Print votes from array
+	for(int i = 0; i<5; i++) {
+		System.out.println("Candidate " + i + " has " + v[i] + " vote(s)");
+		}
 }
 
 public static String getWinner (int[] results, String[] names) {
@@ -46,13 +50,17 @@ public static String getWinner (int[] results, String[] names) {
 	 * Total divisible by 3 and 8
 	 * or randomly chosen
 	 */
+	String win = "The winner is: Candidate ";
 	for(int i = 0; i<5; i++) {
 	if((results[i] % 3 == 0)&&(results[i] % 8 == 0)) {
-		System.out.println("test win");
+		win = win + names[i];
 	}else {
-		System.out.println("test loose");
+		//lose
 	}}
-	return new String();
+	if(win == "The winner is: Candidate ") {
+		win = win + names[(int) (Math.random()*(4))];//assign random winner
+	}
+	return win;
 }
 
 }
